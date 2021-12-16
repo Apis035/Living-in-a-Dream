@@ -1,0 +1,44 @@
+﻿FormatVersion: 7
+Name: "Main"
+Script: "MainRewrite"
+Config:
+  RandomSeed:
+    Type: "System.Int32"
+    Value: "0"
+    DisplayName: "Random seed"
+Layers:
+  f891b3a4825b46e5ae25f25fd6f446b1:
+    Name: "Disable map BG"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  a626c00d48104388afdb32717faa092c:
+    Name: "Blurred BG"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  525dabb405384675b13d23345ee6c80b:
+    Name: "White BG"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  3c9e25e6c1d64ed7bdc1d250624357db:
+    Name: "Girl"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  e9fedeaed7314d938b664ca38f46ce7c:
+    Name: "Lightning"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  0cfd4291d2424e3a8f319a0b6a07f6b0:
+    Name: "White overlay"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  04314b89dfa040768537b609c6ac24dd:
+    Name: "Letterbox"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
