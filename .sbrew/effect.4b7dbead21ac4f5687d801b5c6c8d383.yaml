@@ -42,3 +42,8 @@ Layers:
     OsbLayer: Background
     DiffSpecific: No
     Visible: Yes
+  0d88b169be794fe09e506b797575a7a9:
+    Name: "Highlight"
+    OsbLayer: Overlay
+    DiffSpecific: Yes
+    Visible: Yes

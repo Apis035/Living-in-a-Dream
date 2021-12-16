@@ -22,7 +22,7 @@ namespace StorybrewScripts
         {
             int startTime = -27;
             int EndTime   = 213766;
-            var bitmap    = GetMapsetBitmap("sb/bar.png");
+            var bitmap    = GetMapsetBitmap("sb/s.png");
             var layer     = GetLayer("Spectrum");
             var barWidth  = Width*2 / BarCount;
 
@@ -55,7 +55,7 @@ namespace StorybrewScripts
                 var keyframes = heightKeyframes[i];
                 keyframes.Simplify1dKeyframes(Tolerance, h => h);
 
-                var sprite = layer.CreateSprite("sb/bar.png", OsbOrigin.Centre, new Vector2(325 - totalWidth/2 + i * barWidth, Position.Y));
+                var sprite = layer.CreateSprite("sb/s.png", OsbOrigin.Centre, new Vector2(325 - totalWidth/2 + i * barWidth, Position.Y));
                 sprite.CommandSplitThreshold = 100;
 
                 var scaleX = (float)Math.Floor(Scale.X * barWidth / (bitmap.Width - 2) * 10) / 10.0f;
