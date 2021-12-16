@@ -1,31 +1,7 @@
 ﻿FormatVersion: 7
-Name: "Spectrum 1"
+Name: "Spectrum"
 Script: "Spectrum"
 Config:
-  Position:
-    Type: "OpenTK.Vector2"
-    Value: "200,240"
-  Width:
-    Type: "System.Single"
-    Value: "800"
-  BeatDivisor:
-    Type: "System.Int32"
-    Value: "8"
-  BarCount:
-    Type: "System.Int32"
-    Value: "120"
-  Scale:
-    Type: "OpenTK.Vector2"
-    Value: "1,40"
-  LogScale:
-    Type: "System.Int32"
-    Value: "300"
-  PowerScale:
-    Type: "System.Double"
-    Value: "1.2"
-  Tolerance:
-    Type: "System.Double"
-    Value: "2"
   RandomSeed:
     Type: "System.Int32"
     Value: "0"

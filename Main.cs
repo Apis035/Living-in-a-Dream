@@ -6,7 +6,7 @@ using StorybrewCommon.Storyboarding;
 
 namespace StorybrewScripts
 {
-    public class MainRewrite : StoryboardObjectGenerator
+    public class Main : StoryboardObjectGenerator
     {
         public override void Generate()
         {

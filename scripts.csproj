@@ -52,7 +52,7 @@
   </Target>
   -->
   <ItemGroup>
-    <Compile Include="MainRewrite.cs" />
+    <Compile Include="Main.cs" />
     <Compile Include="Spectrum.cs" />
   </ItemGroup>
   <ItemGroup />
