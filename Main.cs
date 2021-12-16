@@ -296,7 +296,7 @@ namespace StorybrewScripts
                     44110, 55145, 66179, 77214, 132386, 143421, 154455, 165490, 187559})
                     ring(i, true);
                 foreach (var i in new List<int>{
-                    60662, 71697, 88248, 148938, 159973, 176524})
+                    88248, 176524})
                     ring(i, false);
             }
         }
