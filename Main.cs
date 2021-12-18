@@ -15,78 +15,24 @@ namespace StorybrewScripts
 		[Configurable] public bool ReduceLight = false;
 		OsbSpritePool pool;
 		float scale;
-		double beat, beat4;
+		int beat, beat4;
+		FontGenerator font;
 
 		public override void Generate()
 		{
 			GetLayer("Disable Map BG").CreateSprite(Beatmap.BackgroundPath).Fade(0,0);
 
 			scale = 480f / 1080f;
-			beat  = Beatmap.GetTimingPointAt(0).BeatDuration;
+			beat  = (int)Beatmap.GetTimingPointAt(0).BeatDuration;
 			beat4 = beat*4;
 
-			Credits();
+			font = LoadFont("sb/font",
+				new FontDescription() { FontPath = "Consolas", Color = Color4.White, FontSize = 34});
+
 			Background();
 			Highlight();
 			Particle();
-		}
-
-		void Credits()
-		{
-			var font = LoadFont("sb/font",
-				new FontDescription() { FontPath = "Consolas", Color = Color4.White, FontSize = 30});
-			
-			Action<int, int, bool, string, bool> drawText = (startTime, endTime, upPos, text, mapperName) =>
-			{
-				var width = 0f;
-				var scale = upPos ? .3f : .5f;
-				foreach (var letter in text) width += font.GetTexture(letter.ToString()).BaseWidth * scale;
-
-				var x = 320f - width/2;
-				var y = upPos ? 328f : 350f;
-				var delay = 0;
-
-				foreach (var letter in text)
-				{
-					var texture = font.GetTexture(letter.ToString());
-
-					if (!texture.IsEmpty)
-					{
-						var layer = mapperName ? "Mapper" : "Credits";
-						
-						var pos = new Vector2(x, y) + texture.OffsetFor(OsbOrigin.Centre);
-						var sprite = GetLayer(layer).CreateSprite(texture.Path, OsbOrigin.Centre, pos);
-						sprite.Scale(startTime, scale);
-						sprite.Fade(startTime + delay, startTime + 600 + delay, 0, 1);
-						sprite.Fade(endTime - 600 + delay, endTime + delay, 1, 0);
-					}
-					x += texture.BaseWidth * scale;
-					delay += 10;
-				}
-			};
-
-			drawText(500, 3800, true, "Quinn Karter ft. Natalie Major", false);
-			drawText(500, 3800, false, "Living in a Dream (Feint Remix)", false);
-
-			var mapper = "peppy";
-			switch (Beatmap.Name)
-			{
-				case "Normal": case "Hard": case "Insane": case "Star":
-					mapper = "Asphyxia";
-					break;
-				case "kolik's Easy":
-					mapper = "koleiker";
-					break;
-				case "Kyshiro's Extra":
-					mapper = "Kyshiro";
-					break;
-			}
-			drawText(4000, 7000, true, "Beatmap by", false);
-			drawText(4000, 7000, false, mapper, true);
-
-			drawText(7000, 10000, true, "Storyboard by", false);
-			drawText(7000, 10000, false, "Apis035 & -Ady", true);
-
+			Credits();
 		}
 
 		void Background()
@@ -113,7 +59,7 @@ namespace StorybrewScripts
 			ltb1.Fade(time, 1);
 			ltb2.Fade(time, 1);
 			blur.Scale(time, scale);
-			blur.Fade(time, time + beat4*4, 0, 1);
+			blur.Fade(time, time + beat4*4, 0, ReduceLight ? .8 : 1);
 
 			// Verse //
 			time = 11007;
@@ -127,7 +73,7 @@ namespace StorybrewScripts
 
 			// Prechorus //
 			time = 44110;
-			blur.Fade(time, 1);
+			blur.Fade(time, ReduceLight ? .8 : 1);
 			solid.Fade(time, 0);
 			flare.Additive(time);
 			flare.Fade(time, time + beat4*4, ReduceLight ? .4 : .8, 0);
@@ -139,17 +85,17 @@ namespace StorybrewScripts
 			// Chorus //
 			time = 55145;
 
-			Action letterboxin = () =>
+			Action letterboxIn = () =>
 			{
 				ltb1.ScaleVec(OsbEasing.InExpo, time - beat4, time - beat, 854, 90, 950, 290);
 				ltb2.ScaleVec(OsbEasing.InExpo, time - beat4, time - beat, 854, 90, 950, 290);
-				ltb1.Rotate(OsbEasing.InExpo, time - beat4, time - beat, 0, -0.15);
-				ltb2.Rotate(OsbEasing.InExpo, time - beat4, time - beat, 0, -0.15);
+				ltb1.Rotate(OsbEasing.InExpo, time - beat4, time - beat, 0, -.2);
+				ltb2.Rotate(OsbEasing.InExpo, time - beat4, time - beat, 0, -.2);
 				ltb1.Fade(time - beat4, time - beat, 1, 0);
 				ltb2.Fade(time - beat4, time - beat, 1, 0);
 			};
 
-			letterboxin();
+			letterboxIn();
 			blur.Fade(time - beat, 0);
 			flare.Fade(time - beat4*4, time - beat, 0, ReduceLight ? .4 : .8);
 			flare.Fade(time - beat, 0);
@@ -183,7 +129,7 @@ namespace StorybrewScripts
 			overlay.Fade(OsbEasing.Out, time, time + beat4*3, 1, 0);
 			overlay.Fade(OsbEasing.In, 66179 - beat4, 66179, 0, .1);
 			overlay.Fade(OsbEasing.Out, 66179, 66179 + beat4, .5, 0);
-			blur.Fade(time, 1);
+			blur.Fade(time, ReduceLight ? .8 : 1);
 			flare.Fade(time, ReduceLight ? .3 : .8);
 			light.ScaleVec(time, 854, 1);
 			light.StartLoopGroup(time, 2);
@@ -235,7 +181,7 @@ namespace StorybrewScripts
 
 			// Prechorus //
 			time = 132386;
-			blur.Fade(time, 1);
+			blur.Fade(time, ReduceLight ? .8 : 1);
 			solid.Fade(time, 0);
 			flare.Fade(time, time + beat4*4, ReduceLight ? .4 : .8, 0);
 			overlay.Fade(OsbEasing.In, time - beat4*2, time - beat, 0, 1);
@@ -244,7 +190,7 @@ namespace StorybrewScripts
 			// Chorus //
 			time = 143421;
 
-			letterboxin();
+			letterboxIn();
 			blur.Fade(time - beat, 0);
 			flare.Fade(time - beat4*4, time - beat, 0, ReduceLight ? .4 : .8);
 			flare.Fade(time - beat, 0);
@@ -269,7 +215,7 @@ namespace StorybrewScripts
 			overlay.Fade(OsbEasing.Out, time, time + beat4*3, 1, 0);
 			overlay.Fade(OsbEasing.In, 154455 - beat4, 154455, 0, .1);
 			overlay.Fade(OsbEasing.Out, 154455, 154455 + beat4, .5, 0);
-			blur.Fade(time, 1);
+			blur.Fade(time, ReduceLight ? .8 : 1);
 			flare.Fade(time, ReduceLight ? .3 : .8);
 			light.StartLoopGroup(time, 2);
 				light.Fade(OsbEasing.InOutSine, 0, beat*4*4, ReduceLight ? .4 : .8, .1);
@@ -304,7 +250,7 @@ namespace StorybrewScripts
 			overlay.Fade(OsbEasing.In, time - beat4, time, 0, .5);
 			overlay.Fade(OsbEasing.Out, time, time + beat4*3, 1, 0);
 			girl.Fade(187559, 206869, .6, 0);
-			blur.Fade(OsbEasing.Out, 202731, 209628, 1, 0);
+			blur.Fade(OsbEasing.Out, 202731, 209628, ReduceLight ? .8 : 1, 0);
 		}
 
 		void Highlight()
@@ -318,7 +264,7 @@ namespace StorybrewScripts
 					var slider = circle is OsuSlider;
 					var cStart = circle.StartTime;
 					var cEnd   = circle.EndTime;
-					
+
 					if (cStart < startTime - 5 || endTime - 5 <= cStart) continue;
 
 					var sprite = pool.Get(cStart, cEnd + beat4 / (slider ? 2 : 1));
@@ -363,12 +309,12 @@ namespace StorybrewScripts
 				}
 			};
 
-			Action<int, int> strip = (startTime, endTime) =>
+			Action<int, int, bool> strip = (startTime, endTime, noDelay) =>
 			{
 				var lastPos  = new Vector2(240, 320);
 				var lastTime = (double)startTime;
-				var scale    = 30;
-				var fade     = .02f;
+				var scale    = noDelay ? 60 : 30;
+				var fade     = noDelay ? .2f : .02f;
 				foreach (var circle in Beatmap.HitObjects)
 				{
 					var slider = circle is OsuSlider;
@@ -415,22 +361,51 @@ namespace StorybrewScripts
 
 			using (pool = new OsbSpritePool(GetLayer("Back Highlight"), "sb/p.png", OsbOrigin.Centre, (s, a, b) => s.Additive(a)))
 			{
-				strip(52386, 53766);
-				strip(57904, 60748);
-				strip(63421, 66266);
-				strip(68938, 71783);
-				strip(74455, 75835);
+				for (var i=45490; i<46869; i+=beat)
+					strip(i-10, i+10, true);
+				for (var i=48248; i<49628; i+=beat)
+					strip(i-10, i+10, true);
+				for (var i=51007; i<52386; i+=beat)
+					strip(i-10, i+10, true);
+				strip(52386, 53766, false);
+				strip(57904, 60748, false);
+				strip(63421, 66266, false);
+				strip(68938, 71783, false);
+				strip(74455, 75835, false);
 
-				strip(140662, 142041);
-				strip(146179, 149024);
-				strip(151697, 154541);
-				strip(157214, 160059);
-				strip(162731, 164110);
+				for (var i=133766; i<135145; i+=beat)
+					strip(i-10, i+10, true);
+				for (var i=136524; i<137904; i+=beat)
+					strip(i-10, i+10, true);
+				for (var i=139283; i<140662; i+=beat)
+					strip(i-10, i+10, true);
+				strip(140662, 142041, false);
+				strip(146179, 149024, false);
+				strip(151697, 154541, false);
+				strip(157214, 160059, false);
+				strip(162731, 164110, false);
 			}
 		}
 
 		void Particle()
 		{
+			Action<int, int, int> flyUp = (startTime, endTime, step) =>
+			{
+				for (var i=startTime; i<endTime; i+=step)
+				{
+					var duration = 3000 + Random(2000);
+					var startPos = new Vector2(-107 + Random(854), 480);
+					var endPos   = new Vector2(
+						startPos.X + Random(-100, 100),
+						startPos.Y - Random(300, 480));
+
+					var sprite = pool.Get(i, i + duration);
+					sprite.Move(OsbEasing.InOutSine, i, i + duration, startPos, endPos);
+					sprite.Scale(OsbEasing.Out, i, i + duration, Random(10) < 4 ? .5 : 1, 0);
+					sprite.Fade(OsbEasing.In, i, i + 2000, 0, 1);
+				}
+			};
+
 			Action<int, int, int> spark = (startTime, endTime, step) =>
 			{
 				for (var i=startTime; i<endTime; i+=step)
@@ -457,7 +432,77 @@ namespace StorybrewScripts
 
 				spark(144800, 165490, 15);
 				spark(165490, 187559, 30);
+
+				flyUp(33076, 39972, 60);
+				flyUp(121352, 128248, 60);
 			}
+		}
+
+		void Credits()
+		{
+			var mapper = "peppy";
+
+			Action<int, int, bool, string, bool> drawText = (startTime, endTime, upPos, text, mapperName) =>
+			{
+				var width = 0f;
+				var scale = upPos ? .3f : .5f;
+				foreach (var letter in text) width += font.GetTexture(letter.ToString()).BaseWidth * scale;
+
+				var x = 313f - width/2;
+				var y = upPos ? 324f : 350f;
+				var delay = 0;
+
+				foreach (var letter in text)
+				{
+					var texture = font.GetTexture(letter.ToString());
+
+					if (!texture.IsEmpty)
+					{
+						var layer = text == mapper ? "Mapper" : "Credits";
+
+						var pos = new Vector2(x, y) + texture.OffsetFor(OsbOrigin.Centre);
+						var sprite = GetLayer(layer).CreateSprite(texture.Path, OsbOrigin.Centre, pos);
+						sprite.Scale(startTime, scale);
+						sprite.MoveY(OsbEasing.OutCirc, startTime, startTime + 1000, pos.Y + (upPos ? 12 : -12), pos.Y);
+						sprite.MoveY(OsbEasing.InCirc, endTime - 1000, endTime, pos.Y, pos.Y + (upPos ? 12 : -12));
+						sprite.Fade(OsbEasing.Out, startTime, startTime + 1000, 0, 1);
+						sprite.Fade(OsbEasing.In, endTime - 1000, endTime, 1, 0);
+					}
+					x += texture.BaseWidth * scale;
+					delay += 10;
+				}
+			};
+
+			var line = GetLayer("Credits").CreateSprite("sb/p.png", OsbOrigin.Centre, new Vector2(320, 363));
+			line.Fade(0, .7);
+			line.Fade(9000, 10500, .7, 0);
+			line.ScaleVec(OsbEasing.InOutSine, 0, 4000, 0, 1, 340, 1);
+			line.ScaleVec(OsbEasing.InOutSine, 6000, 10500, 340, 1, 0, 1);
+
+			drawText(1000, 4000, true, "Quinn Karter ft. Natalie Major", false);
+			drawText(1000, 4000, false, "Living in a Dream (Feint Remix)", false);
+
+			switch (Beatmap.Name)
+			{
+				case "Normal": case "Hard": case "Insane": case "Star":
+					mapper = "Asphyxia";
+					break;
+
+				case "kolik's Easy":
+					mapper = "koleiker";
+					break;
+
+				case "Kyshiro's Extra":
+					mapper = "Kyshiro";
+					break;
+			}
+
+			drawText(4000, 7000, true, "Beatmap by", false);
+			drawText(4000, 7000, false, mapper, true);
+
+			drawText(7000, 10000, true, "Storyboard by", false);
+			drawText(7000, 10000, false, "Apis035 & -Ady", true);
+
 		}
 	}
 }
