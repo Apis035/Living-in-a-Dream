@@ -137,7 +137,7 @@ namespace StorybrewScripts
 				light.Fade(OsbEasing.InOutSine, beat*4*4, beat*4*8, .1, ReduceLight ? .4 : .8);
 				light.EndGroup();
 			girl.Scale(time, scale);
-			girl.Fade(OsbEasing.Out, time, time + beat4, .5, .8);
+			girl.Fade(time, .6);
 			girl.StartLoopGroup(time, 4);
 				girl.MoveY(OsbEasing.InOutSine, 0, beat4*4, 245, 260);
 				girl.MoveY(OsbEasing.InOutSine, beat4*4, beat4*8, 260, 245);
@@ -151,7 +151,7 @@ namespace StorybrewScripts
 			time = 77214;
 			light.Fade(time, 0);
 			flare.Fade(time, ReduceLight ? .1 : .5);
-			girl.Fade(time, .7);
+			girl.Fade(time, .5);
 			overlay.Fade(OsbEasing.In, time - beat4, time, 0, .3);
 			overlay.Fade(OsbEasing.Out, time, time + beat4*3, 1, 0);
 			overlay.Fade(OsbEasing.In, 88248 - beat4/2, 88248, 0, .1);
@@ -221,7 +221,7 @@ namespace StorybrewScripts
 				light.Fade(OsbEasing.InOutSine, 0, beat*4*4, ReduceLight ? .4 : .8, .1);
 				light.Fade(OsbEasing.InOutSine, beat*4*4, beat*4*8, .1, ReduceLight ? .4 : .8);
 				light.EndGroup();
-			girl.Fade(OsbEasing.Out, time, time + beat4, .5, .8);
+			girl.Fade(time, .6);
 			girl.StartLoopGroup(time, 6);
 				girl.MoveY(OsbEasing.InOutSine, 0, beat4*4, 245, 260);
 				girl.MoveY(OsbEasing.InOutSine, beat4*4, beat4*8, 260, 245);
@@ -235,7 +235,7 @@ namespace StorybrewScripts
 			time = 165490;
 			light.Fade(time, 0);
 			flare.Fade(time, ReduceLight ? .1 : .5);
-			girl.Fade(time, .7);
+			girl.Fade(time, .5);
 			overlay.Fade(OsbEasing.In, time - beat4, time, 0, .3);
 			overlay.Fade(OsbEasing.Out, time, time + beat4*3, 1, 0);
 			overlay.Fade(OsbEasing.In, 176524 - beat4/2, 176524, 0, .1);
@@ -249,13 +249,13 @@ namespace StorybrewScripts
 			flare.Fade(time, 0);
 			overlay.Fade(OsbEasing.In, time - beat4, time, 0, .5);
 			overlay.Fade(OsbEasing.Out, time, time + beat4*3, 1, 0);
-			girl.Fade(187559, 206869, .6, 0);
+			girl.Fade(187559, 206869, .5, 0);
 			blur.Fade(OsbEasing.Out, 202731, 209628, ReduceLight ? .8 : 1, 0);
 		}
 
 		void Highlight()
 		{
-			var size = Beatmap.CircleSize/5;
+			var size = 3.5/Beatmap.CircleSize;
 
 			Action<int, int, float> glow = (startTime, endTime, brightness) => 
 			{
@@ -312,8 +312,9 @@ namespace StorybrewScripts
 			Action<int, int, bool> strip = (startTime, endTime, noDelay) =>
 			{
 				var lastPos  = new Vector2(240, 320);
+				var lastDir  = 0d;
 				var lastTime = (double)startTime;
-				var scale    = noDelay ? 60 : 30;
+				var scale    = noDelay ? 70 : 40;
 				var fade     = noDelay ? .2f : .02f;
 				foreach (var circle in Beatmap.HitObjects)
 				{
@@ -323,18 +324,24 @@ namespace StorybrewScripts
 
 					if (cStart < startTime - 5 || endTime - 5 <= cStart) continue;
 
-					var angle  = Math.Atan2(circle.Position.Y - lastPos.Y, circle.Position.X - lastPos.X) + Math.PI/2;
-					if (cStart - lastTime < 100 && scale > 30) scale -= 10;
+					var angle  = Math.Sqrt(
+						// change direction only slightly a bit if its a circle stack
+						Math.Pow(lastPos.X - circle.Position.X, 2) + Math.Pow(lastPos.Y - circle.Position.Y, 2)) > 10 ?
+						Math.Atan2(circle.Position.Y - lastPos.Y, circle.Position.X - lastPos.X) + Math.PI/2 :
+						lastDir - 0.1;
+
+					if (cStart - lastTime < 100 && scale > 40) scale -= 10;
 
 					var sprite = pool.Get(cStart, cStart + beat4);
 					sprite.Move(cStart, circle.Position);
 					sprite.Rotate(cStart, angle);
-					sprite.ScaleVec(OsbEasing.OutQuint, cStart, cStart + beat4, 1400, scale, 1400, 0);
+					sprite.ScaleVec(OsbEasing.OutQuint, cStart, cStart + beat4, 1400, scale * size, 1400, 0);
 					sprite.Fade(OsbEasing.OutExpo, cStart, cStart + beat4, fade, .05);
 
-					if (scale < 60) scale += 10;
+					if (scale < 70) scale += 10;
 					if (fade < .3f) fade  += .04f;
 					lastPos  = circle.Position;
+					lastDir  = angle;
 					lastTime = cStart;
 				}
 			};
@@ -389,23 +396,6 @@ namespace StorybrewScripts
 
 		void Particle()
 		{
-			Action<int, int, int> flyUp = (startTime, endTime, step) =>
-			{
-				for (var i=startTime; i<endTime; i+=step)
-				{
-					var duration = 3000 + Random(2000);
-					var startPos = new Vector2(-107 + Random(854), 480);
-					var endPos   = new Vector2(
-						startPos.X + Random(-100, 100),
-						startPos.Y - Random(300, 480));
-
-					var sprite = pool.Get(i, i + duration);
-					sprite.Move(OsbEasing.InOutSine, i, i + duration, startPos, endPos);
-					sprite.Scale(OsbEasing.Out, i, i + duration, Random(10) < 4 ? .5 : 1, 0);
-					sprite.Fade(OsbEasing.In, i, i + 2000, 0, 1);
-				}
-			};
-
 			Action<int, int, int> spark = (startTime, endTime, step) =>
 			{
 				for (var i=startTime; i<endTime; i+=step)
@@ -425,6 +415,23 @@ namespace StorybrewScripts
 				}
 			};
 
+			Action<int, int, int, int> flyUp = (startTime, endTime, step, dur) =>
+			{
+				for (var i=startTime; i<endTime; i+=step)
+				{
+					var duration = dur + Random(dur/2);
+					var startPos = new Vector2(-97 + Random(844), 450);
+					var endPos   = new Vector2(
+						startPos.X + Random(-100, 100),
+						startPos.Y - Random(300, 480));
+
+					var sprite = pool.Get(i, i + duration);
+					sprite.Move(OsbEasing.InOutSine, i, i + duration, startPos, endPos);
+					sprite.Scale(OsbEasing.Out, i, i + duration, Random(10) < 4 ? .5 : 1, 0);
+					sprite.Fade(OsbEasing.In, i, i + 1000, 0, 1);
+				}
+			};
+
 			using (pool = new OsbSpritePool(GetLayer("Particle"), "sb/a.png", OsbOrigin.Centre))
 			{
 				spark(56524, 77214, 15);
@@ -433,8 +440,17 @@ namespace StorybrewScripts
 				spark(144800, 165490, 15);
 				spark(165490, 187559, 30);
 
-				flyUp(33076, 39972, 60);
-				flyUp(121352, 128248, 60);
+				flyUp(33076, 44110, 120, 5000);
+				flyUp(44110, 46869, 40, 3000);
+				flyUp(46869, 49628, 30, 2500);
+				flyUp(49628, 52386, 20, 2000);
+				flyUp(52386, 53766, 20, 1500);
+
+				flyUp(121352, 132386, 120, 5000);
+				flyUp(132386, 135145, 40, 3000);
+				flyUp(135145, 137904, 30, 2500);
+				flyUp(137904, 140662, 20, 2000);
+				flyUp(140662, 142041, 20, 1500);
 			}
 		}
 
