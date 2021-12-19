@@ -12,7 +12,7 @@ namespace StorybrewScripts
 		Vector2 Pos       = new Vector2(200, 240);
 		float Width       = 800f;
 		int BeatDiv       = 8;
-		int BarCount      = 130;
+		int BarCount      = 150;
 		Vector2 Scale     = new Vector2(1, 100);
 		int LogScale      = 300;
 		double PowerScale = 1.5;
