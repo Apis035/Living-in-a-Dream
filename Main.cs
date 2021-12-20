@@ -315,7 +315,7 @@ namespace StorybrewScripts
 				var lastDir  = 0d;
 				var lastTime = (double)startTime;
 				var scale    = noDelay ? 70 : 40;
-				var fade     = noDelay ? .2f : .02f;
+				var fade     = noDelay ? .4f : .1f;
 				foreach (var circle in Beatmap.HitObjects)
 				{
 					var slider = circle is OsuSlider;
@@ -339,7 +339,7 @@ namespace StorybrewScripts
 					sprite.Fade(OsbEasing.OutExpo, cStart, cStart + beat4, fade, .05);
 
 					if (scale < 70) scale += 10;
-					if (fade < .3f) fade  += .04f;
+					if (fade < .6f) fade  += .04f;
 					lastPos  = circle.Position;
 					lastDir  = angle;
 					lastTime = cStart;
@@ -492,8 +492,8 @@ namespace StorybrewScripts
 			var line = GetLayer("Credits").CreateSprite("sb/p.png", OsbOrigin.Centre, new Vector2(320, 363));
 			line.Fade(0, .7);
 			line.Fade(9000, 10500, .7, 0);
-			line.ScaleVec(OsbEasing.InOutSine, 0, 4000, 0, 1, 340, 1);
-			line.ScaleVec(OsbEasing.InOutSine, 6000, 10500, 340, 1, 0, 1);
+			line.ScaleVec(OsbEasing.InOutSine, 0, 4000, 0, 1, 400, 1);
+			line.ScaleVec(OsbEasing.InOutSine, 6000, 10500, 400, 1, 0, 1);
 
 			drawText(1000, 4000, true, "Quinn Karter ft. Natalie Major", false);
 			drawText(1000, 4000, false, "Living in a Dream (Feint Remix)", false);
