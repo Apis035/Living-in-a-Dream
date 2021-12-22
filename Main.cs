@@ -12,7 +12,7 @@ namespace StorybrewScripts
 {
 	public class Main : StoryboardObjectGenerator
 	{
-		[Configurable] public bool ReduceLight = false;
+		[Configurable] public bool ReduceLight = true;
 		OsbSpritePool pool;
 		float scale;
 		int beat, beat4;
@@ -38,15 +38,15 @@ namespace StorybrewScripts
 
 		void Shape()
 		{
-			Action<int, int> tileBg = (startTime, endTime) =>
+			Action<int, int> tile = (startTime, endTime) =>
 			{
 				for (var x=-107; x<854; x+=100) {
 					for (var y=0; y<480; y+=100) {
 						var sprite = GetLayer("Shapes").CreateSprite("sb/p.png", OsbOrigin.TopLeft, new Vector2(x, y));
-						sprite.Scale(startTime, 90);
+						sprite.Scale(startTime, 60);
 						sprite.Rotate(startTime, -.2);
-						sprite.Color(startTime, new Color4(.9f, .9f, .9f, 1));
-						sprite.Fade(OsbEasing.Out, startTime, startTime + beat4*2, 0, 1);
+						sprite.Color(startTime, Color4.Black);
+						sprite.Fade(OsbEasing.Out, startTime, startTime + beat4*2, 0, .1);
 						sprite.Fade(endTime, 0);
 						sprite.StartLoopGroup(startTime, 4);
 							sprite.MoveX(0, beat4*4, sprite.InitialPosition.X, sprite.InitialPosition.X - 100);
@@ -55,8 +55,8 @@ namespace StorybrewScripts
 				}
 			};
 
-			tileBg(11007, 33076);
-			tileBg(103421, 121352);
+			tile(11007, 33076);
+			tile(103421, 121352);
 		}
 
 		void Background()
