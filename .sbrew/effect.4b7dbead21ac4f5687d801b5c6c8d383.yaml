@@ -25,6 +25,11 @@ Layers:
     OsbLayer: Background
     DiffSpecific: No
     Visible: Yes
+  a1a6a2f06abb49a5926a670f8e5ec54f:
+    Name: "Shapes"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
   09e470627cad4d66ba9858c64616bb9f:
     Name: "Particle"
     OsbLayer: Background
