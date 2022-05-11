@@ -27,7 +27,7 @@ namespace StorybrewScripts
 			beat4 = beat*4;
 
 			font = LoadFont("sb/font",
-				new FontDescription() { FontPath = "Consolas", Color = Color4.White, FontSize = 34});
+				new FontDescription() { FontPath = "Bahnschrift", Color = Color4.White, FontSize = 34});
 
 			Shape();
 			Background();
@@ -45,8 +45,8 @@ namespace StorybrewScripts
 						var sprite = GetLayer("Shapes").CreateSprite("sb/p.png", OsbOrigin.TopLeft, new Vector2(x, y));
 						sprite.Scale(startTime, 60);
 						sprite.Rotate(startTime, -.2);
-						sprite.Color(startTime, Color4.Black);
-						sprite.Fade(OsbEasing.Out, startTime, startTime + beat4*2, 0, .1);
+						sprite.Color(startTime, new Color4(.95f, .95f, .95f, 1f));
+						sprite.Fade(OsbEasing.Out, startTime, startTime + beat4*2, 0, 1);
 						sprite.Fade(endTime, 0);
 						sprite.StartLoopGroup(startTime, 4);
 							sprite.MoveX(0, beat4*4, sprite.InitialPosition.X, sprite.InitialPosition.X - 100);
@@ -482,15 +482,18 @@ namespace StorybrewScripts
 		{
 			var mapper = "peppy";
 
-			Action<int, int, bool, string, bool> drawText = (startTime, endTime, upPos, text, mapperName) =>
+			Action<int, int, bool, string> drawText = (startTime, endTime, upPos, text) =>
 			{
 				var width = 0f;
 				var scale = upPos ? .3f : .5f;
-				foreach (var letter in text) width += font.GetTexture(letter.ToString()).BaseWidth * scale;
+				foreach (var letter in text) 
+				{
+					var texture = font.GetTexture(letter.ToString());
+					width += texture.BaseWidth * scale;
+				}
 
-				var x = 313f - width/2;
-				var y = upPos ? 324f : 350f;
-				var delay = 0;
+				var x = 320 - width/2;
+				var y = upPos ? 334f : 360f;
 
 				foreach (var letter in text)
 				{
@@ -500,7 +503,7 @@ namespace StorybrewScripts
 					{
 						var layer = text == mapper ? "Mapper" : "Credits";
 
-						var pos = new Vector2(x, y) + texture.OffsetFor(OsbOrigin.Centre);
+						var pos = new Vector2(x, y) + texture.OffsetFor(OsbOrigin.Centre) * scale;
 						var sprite = GetLayer(layer).CreateSprite(texture.Path, OsbOrigin.Centre, pos);
 						sprite.Scale(startTime, scale);
 						sprite.MoveY(OsbEasing.OutCirc, startTime, startTime + 1000, pos.Y + (upPos ? 12 : -12), pos.Y);
@@ -509,18 +512,17 @@ namespace StorybrewScripts
 						sprite.Fade(OsbEasing.In, endTime - 1000, endTime, 1, 0);
 					}
 					x += texture.BaseWidth * scale;
-					delay += 10;
 				}
 			};
 
-			var line = GetLayer("Credits").CreateSprite("sb/p.png", OsbOrigin.Centre, new Vector2(320, 363));
+			var line = GetLayer("Credits").CreateSprite("sb/p.png", OsbOrigin.Centre, new Vector2(320, 355));
 			line.Fade(0, .7);
 			line.Fade(9000, 10500, .7, 0);
 			line.ScaleVec(OsbEasing.InOutSine, 0, 4000, 0, 1, 400, 1);
 			line.ScaleVec(OsbEasing.InOutSine, 6000, 10500, 400, 1, 0, 1);
 
-			drawText(1000, 4000, true, "Quinn Karter ft. Natalie Major", false);
-			drawText(1000, 4000, false, "Living in a Dream (Feint Remix)", false);
+			drawText(1000, 4000, true, "Quinn Karter ft. Natalie Major");
+			drawText(1000, 4000, false, "Living in a Dream (Feint Remix)");
 
 			switch (Beatmap.Name)
 			{
@@ -537,11 +539,11 @@ namespace StorybrewScripts
 					break;
 			}
 
-			drawText(4000, 7000, true, "Beatmap by", false);
-			drawText(4000, 7000, false, mapper, true);
+			drawText(4000, 7000, true, "Beatmap by");
+			drawText(4000, 7000, false, mapper);
 
-			drawText(7000, 10000, true, "Storyboard by", false);
-			drawText(7000, 10000, false, "Apis035 & -Ady", true);
+			drawText(7000, 10000, true, "Storyboard by");
+			drawText(7000, 10000, false, "Apis035 & -Ady");
 
 		}
 	}
