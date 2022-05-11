@@ -52,8 +52,18 @@
   </Target>
   -->
   <ItemGroup>
+    <Compile Include="Background.cs" />
+    <Compile Include="Credit.cs" />
+    <Compile Include="DisableBG.cs" />
+    <Compile Include="Highlight.cs" />
+    <Compile Include="HUD.cs" />
+    <Compile Include="Lyric.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="Overlay.cs" />
+    <Compile Include="Particle.cs" />
     <Compile Include="Spectrum.cs" />
+    <Compile Include="Strip.cs" />
+    <Compile Include="scriptslibrary/Assets.cs" />
   </ItemGroup>
   <ItemGroup />
 </Project>

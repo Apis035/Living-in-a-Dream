@@ -1,0 +1,20 @@
+﻿FormatVersion: 7
+Name: "Lyric"
+Script: "Lyric"
+Config:
+  PositionY:
+    Type: "System.Int32"
+    Value: "366"
+  FadeTime:
+    Type: "System.Int32"
+    Value: "100"
+  RandomSeed:
+    Type: "System.Int32"
+    Value: "0"
+    DisplayName: "Random seed"
+Layers:
+  949e4548c8fd4eecb5d5b42a12953c04:
+    Name: "Lyric"
+    OsbLayer: Foreground
+    DiffSpecific: No
+    Visible: Yes

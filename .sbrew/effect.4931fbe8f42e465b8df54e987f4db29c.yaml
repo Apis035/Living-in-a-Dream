@@ -1,0 +1,32 @@
+﻿FormatVersion: 7
+Name: "Background"
+Script: "Background"
+Config:
+  SidelightIntensity:
+    Type: "System.Double"
+    Value: "0.5"
+  RandomSeed:
+    Type: "System.Int32"
+    Value: "0"
+    DisplayName: "Random seed"
+Layers:
+  5c7a239d2d2f4ae8861646855bea8121:
+    Name: "Background"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  e32e1ac004df4df69974573b1dbf2a89:
+    Name: "Girl"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  4509d24d47ff48d58bedfac529eb809d:
+    Name: "Lightning"
+    OsbLayer: Background
+    DiffSpecific: No
+    Visible: Yes
+  d8b398956204412d87b1a24ef354f679:
+    Name: "Letterbox"
+    OsbLayer: Foreground
+    DiffSpecific: No
+    Visible: Yes
