@@ -1,0 +1,103 @@
+thx probox asphyxia c:
+
+Delay:
+ _ = 1/1 beat
+ , = 4/3 beat
+ - = 4/2 beat
+ / = 4/1 beat
+
+line not starting with number are ignored
+
+
+
+//------------------ Verse ------------------//
+
+11007 slow___ down___
+13076 don't- you- be- af-raid___ now__
+15490 cause- it's- all- in, your- mind____
+
+     (unto, until)
+22041 un___do___ a-ny-thing- you- want___ to__
+26524 now_ lets, take, our- time____
+29283 fol-low_ the- sign____
+
+//------------------ Pre-Chorus ------------------//
+
+32386 like_ a_ he__ro__
+34455 ri_sing_ from_ the_ ash__es__
+
+     (running)
+37214 learn_ing_ from_ the_ dark__ side__
+39972 li_ving_ for_ the_ day____
+
+43421 like_ a_ sea__son__
+45490 shift_ing_ in_ the_ night__ time__
+48248 fight_ing_ for_ a_ new__ life__
+51007 e_very_thing_ will_ change__
+
+53421 or- I_- will...__
+
+//------------------ Chorus ------------------//
+
+    (-lean-)
+77214 lean, into, the- sun__
+78593 gon-na/ pay, the- price__
+79972 if- I/ fall, a-part__
+81352 at,least, then- I'll_ be_ hap_py__
+84110 may,be, then- I'll_ be_ free_____
+
+     (waiting)
+88248 wai-ted/ in, the- dark__
+89628 wish-ing/ on, a- star__
+
+       (-would-)
+91007 I, would, rather- go__
+92386 some,where, then- I'll_ be_ hap_py___
+95145 some,day, I'll- learn_ to_ breathe___
+97904 li_ving- in_ a- dream_
+
+//------------------ Verse ------------------//
+
+99283 long___ road___
+101352 can- you- help- me- find___ home__
+
+     (-I'm-)
+104110 I'm lea,ving, to-night___
+110317 I___ hope___
+112386 may-be- I- could- save_- my_- soul___
+116869 make__ it__ right______
+
+//------------------ Pre-Chorus ------------------//
+
+120662 like_ a_ he__ro__
+
+      (running)
+122731 ri_sing_ from_ the_ ash__es__
+125490 learn_ing_ from_ the_ dark__ side__
+128248 li_ving_ for_ the_ day__
+
+131697 like_ a_ sea__son__
+133766 shift_ing_ in_ the_ night__ time__
+136524 fight_ing_ for_ a_ new__ life__
+139283 e_very_thing_ will_ change__
+
+141697 or- I_- will...__
+
+//------------------ Chorus ------------------//
+
+    (-lean-)
+165490 lean, into, the- sun__
+166869 gon-na/ pay, the- price__
+168248 if- I/ fall, a-part__
+169628 at,least, then- I'll_ be_ hap_py__
+172386 may,be, then- I'll_ be_ free_____
+
+     (waiting)
+176524 wai-ted/ in, the- dark__
+177904 wish-ing/ on, a- star__
+
+       (-would-)
+179283 I, would, rather- go__
+180662 some,where, then- I'll_ be_ hap_py___
+183421 some,day, I'll- learn_ to_ breathe___
+186179 li_ving- in_ a- dream_
